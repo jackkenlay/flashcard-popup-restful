@@ -4,24 +4,33 @@ let seconds = 20;
 const view = require('./../view/popup.js');
 const standardDateString = 'DD-MM-YYYY';
 
+const axios = require('axios');
 const date = require('date-and-time');
+
+const host = '1http://127.0.0.1:3000';
 
 module.exports = {
   start: async () => {
-    //establish connection
+    // TODO
+    // establish connection (connect)
     // await deckStore.loadDeck();
     // deck = deckStore.getDeck();
+
     console.log(`Showing a card every ${seconds} seconds`);
 
     let showNextCard = async () => {
       
       //get the next card from the server
-      let card = getNextCard();
+      let card = await getNextCard();
 
+      //show the front of the card to the user
       await view.showCardFront(card);
+
+      //show the back of the card to the user and get their response.
       let backCardResponse = await view.showCardBack(card, 'right', 'wrong');
 
       //return card response to the server
+
     };
     showNextCard();
 
@@ -62,4 +71,17 @@ function addDaysToCard (card) {
   card.dueDate = newDateAsString;
   // return card
   return card;
+}
+
+async function getNextCard(){
+  try{
+    const response = await axios.get(host+'/getNextCard', {
+      params: {
+        userId: 1234
+      }
+    });
+  }catch (err){
+    console.log('error: ', err);
+  }
+  return response;
 }
