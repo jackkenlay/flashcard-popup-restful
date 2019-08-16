@@ -7,7 +7,7 @@ const standardDateString = 'DD-MM-YYYY';
 const axios = require('axios');
 const date = require('date-and-time');
 
-const host = '1http://127.0.0.1:3000';
+const host = 'http://127.0.0.1:3000';
 
 module.exports = {
   start: async () => {
@@ -23,14 +23,23 @@ module.exports = {
       //get the next card from the server
       let card = await getNextCard();
 
+      console.log(JSON.stringify(card,null,4));
+
+  
       //show the front of the card to the user
       await view.showCardFront(card);
 
       //show the back of the card to the user and get their response.
       let backCardResponse = await view.showCardBack(card, 'right', 'wrong');
 
-      //return card response to the server
+      //return card response to the server if its a fail
+      /*
+        If mac, you can send feedback
+        May need to rewrite in Java for proper notification in future, cross platform and potentially feedback.
+      */
 
+      await returnResult(card,backCardResponse);
+      
     };
     showNextCard();
 
@@ -41,47 +50,27 @@ module.exports = {
   }
 };
 
-function addDaysToCard (card) {
-  const now = new Date();
-  let currentDate = date.format(now, standardDateString);
-
-  // if no correctly answered days, then it's 0
-  let numberOfCorrectAnswers = 0;
-
-  // if it doesn't exist, initialistt it
-  if (!card.correctlyAnsweredDates) {
-    card.correctlyAnsweredDates = [];
+async function returnResult(card,response){
+  console.log('returning to server: ' + JSON.stringify(response,null,4));
+  try {
+    await axios.post('/updateCard', {
+      card,
+      response
+    });
+  }catch (err){
+    console.log('error returning to server: ',err);
   }
-
-  // add today
-  card.correctlyAnsweredDates.push(currentDate);
-
-  numberOfCorrectAnswers = card.correctlyAnsweredDates.length;
-
-  // get days to add
-  let numberOfDaysToAdd = dayAdditionMap(numberOfCorrectAnswers);
-
-  // add the days to current date.
-  var newDate = new Date();
-  newDate.setDate(newDate.getDate() + numberOfDaysToAdd);
-
-  let newDateAsString = newDate.toLocaleDateString().replace(/\//ig, '-');
-
-  // set as new due date
-  card.dueDate = newDateAsString;
-  // return card
-  return card;
 }
 
 async function getNextCard(){
-  try{
-    const response = await axios.get(host+'/getNextCard', {
+  try {
+    let response = await axios.get(host+'/getNextCard', {
       params: {
         userId: 1234
       }
     });
-  }catch (err){
+    return response.data;
+  }catch (err) {
     console.log('error: ', err);
   }
-  return response;
 }
