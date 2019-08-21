@@ -52,23 +52,27 @@ module.exports = {
 
 async function returnResult(card,response){
   console.log('returning to server: ' + JSON.stringify(response,null,4));
-  try {
-    await axios.post('/updateCard', {
-      card,
-      response
-    });
-  }catch (err){
-    console.log('error returning to server: ',err);
-  }
+  // try {
+  //   await axios.post('/updateCard', {
+  //     card,
+  //     response
+  //   });
+  // }catch (err){
+  //   console.log('error returning to server: ',err);
+  // }
 }
 
 async function getNextCard(){
   try {
+    console.log('Getting next card...')
     let response = await axios.get(host+'/getNextCard', {
       params: {
-        userId: 1234
+        userId: 1234,
+        deckId: 1234
       }
     });
+    console.log('response: ' + JSON.stringify(response.data,null,4));
+    console.log('-----');
     return response.data;
   }catch (err) {
     console.log('error: ', err);
