@@ -2,7 +2,7 @@ let currentCard = 1;
 // let seconds = 60 * 5;
 let seconds = 20;
 const view = require('./../view/popup.js');
-const standardDateString = 'DD-MM-YYYY';
+
 
 const axios = require('axios');
 const date = require('date-and-time');
