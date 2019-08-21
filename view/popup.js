@@ -19,47 +19,24 @@ module.exports = {
           resolve();
         }
       );
-
-
-      notifier.on('click', function(notifierObject, options, event) {
-        // Triggers if `wait: true` and user clicks notification
-        resolve();
-      });
-
-      notifier.on('timeout', function(notifierObject, options) {
-        // Triggers if `wait: true` and notification closes
-        resolve();
-      });
     });
   },
   showCardBack: function (card, rightText, wrongText) {
-    // console.log('showing card back');
     return new Promise((resolve, reject) => {
       notifier.notify(
         {
           title: 'Back:',
           message: card.back,
           actions: [rightText, wrongText],
-          timeout: 10
+          timeout: 10,
+          closeLabel: 'close'
         },
-        function (err, response) {
+        function (err, response, metadata) {
           // console.log('end of back');
           if (err) throw err;
-          resolve(response);
+          resolve(metadata.activationValue);
         }
       );
-
-
-      notifier.on('click', function(notifierObject, options, event) {
-        // Triggers if `wait: true` and user clicks notification
-        // got it right.
-        resolve(rightText);
-      });
-
-      notifier.on('timeout', function(notifierObject, options) {
-        // Triggers if `wait: true` and notification closes
-        resolve();
-      });
     });
   }
 };

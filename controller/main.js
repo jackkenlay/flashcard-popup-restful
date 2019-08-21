@@ -23,7 +23,7 @@ module.exports = {
       //get the next card from the server
       let card = await getNextCard();
 
-      console.log(JSON.stringify(card,null,4));
+      //console.log(JSON.stringify(card,null,4));
 
   
       //show the front of the card to the user
@@ -38,8 +38,9 @@ module.exports = {
         May need to rewrite in Java for proper notification in future, cross platform and potentially feedback.
       */
 
-      await returnResult(card,backCardResponse);
-      
+      if(backCardResponse !== undefined){
+        await returnResult(card,backCardResponse);
+      }
     };
     showNextCard();
 
@@ -51,15 +52,16 @@ module.exports = {
 };
 
 async function returnResult(card,response){
+  console.log(JSON.stringify(card,null,4));
   console.log('returning to server: ' + JSON.stringify(response,null,4));
-  // try {
-  //   await axios.post('/updateCard', {
-  //     card,
-  //     response
-  //   });
-  // }catch (err){
-  //   console.log('error returning to server: ',err);
-  // }
+  try {
+    await axios.post(host+'/updateCard', {
+      card,
+      response
+    });
+  }catch (err){
+    console.log('error returning to server: ',err);
+  }
 }
 
 async function getNextCard(){
@@ -71,8 +73,8 @@ async function getNextCard(){
         deckId: 1234
       }
     });
-    console.log('response: ' + JSON.stringify(response.data,null,4));
-    console.log('-----');
+    //console.log('response: ' + JSON.stringify(response.data,null,4));
+    //console.log('-----');
     return response.data;
   }catch (err) {
     console.log('error: ', err);
