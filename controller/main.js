@@ -5,16 +5,7 @@ const config = require('./../config.json');
 
 module.exports = {
   start: async () => {
-   
-
-
-
     console.log('Config: ' + JSON.stringify(config,null,4));
-    // TODO
-    // establish connection (connect)
-    // await deckStore.loadDeck();
-    // deck = deckStore.getDeck();
-
     console.log(`Showing a card every ${config.seconds} seconds`);
 
     let showNextCard = async () => {
@@ -22,14 +13,11 @@ module.exports = {
       //get the next card from the server
       let card = await getNextCard();
 
-      console.log('Card before format: ' + JSON.stringify(card,null,4));
+      //console.log('Card before format: ' + JSON.stringify(card,null,4));
       card = formatCard(card);
-      console.log('Card after format: ' + JSON.stringify(card,null,4));
-
-
+      //console.log('Card after format: ' + JSON.stringify(card,null,4));
       //console.log(JSON.stringify(card,null,4));
 
-  
       //show the front of the card to the user
       await view.showCardFront(card);
 
@@ -89,10 +77,11 @@ async function returnResult(card,response){
 async function getNextCard(){
   try {
     console.log('Getting next card...')
+    
     let response = await axios.get(config.host+'/getNextCard', {
       params: {
-        userId: 1234,
-        deckId: 1234
+        userId: config.userId,
+        deckId: config.deckId
       }
     });
     //console.log('response: ' + JSON.stringify(response.data,null,4));
