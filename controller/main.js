@@ -52,15 +52,18 @@ module.exports = {
 };
 
 async function returnResult(card,response){
+  console.log('return result to server:');
   console.log(JSON.stringify(card,null,4));
   console.log('returning to server: ' + JSON.stringify(response,null,4));
+
   try {
-    await axios.post(host+'/updateCard', {
-      card,
-      response
+    await axios.post(host+'/answerCard', {
+      cardId:card.id,
+      response,
     });
   }catch (err){
-    console.log('error returning to server: ',err);
+    console.log('error returning to server: ');
+    //console.log('error returning to server: ', err);
   }
 }
 
@@ -77,6 +80,7 @@ async function getNextCard(){
     //console.log('-----');
     return response.data;
   }catch (err) {
-    console.log('error: ', err);
+    console.log('error getting next card:');
+    //console.log('error: ', err);
   }
 }
