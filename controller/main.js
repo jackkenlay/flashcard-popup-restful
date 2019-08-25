@@ -1,22 +1,21 @@
-let currentCard = 1;
-// let seconds = 60 * 5;
-let seconds = 20;
 const view = require('./../view/popup.js');
-
-
 const axios = require('axios');
-const date = require('date-and-time');
 
-const host = 'http://127.0.0.1:3000';
+const config = require('./../config.json');
 
 module.exports = {
   start: async () => {
+   
+
+
+
+    console.log('Config: ' + JSON.stringify(config,null,4));
     // TODO
     // establish connection (connect)
     // await deckStore.loadDeck();
     // deck = deckStore.getDeck();
 
-    console.log(`Showing a card every ${seconds} seconds`);
+    console.log(`Showing a card every ${config.seconds} seconds`);
 
     let showNextCard = async () => {
       
@@ -49,7 +48,7 @@ module.exports = {
     };
     showNextCard();
 
-    setInterval(showNextCard, seconds * 1000);
+    setInterval(showNextCard, config.seconds * 1000);
   },
   stop: function () {
     process.exit();
@@ -77,7 +76,7 @@ async function returnResult(card,response){
   console.log('returning to server: ' + JSON.stringify(response,null,4));
 
   try {
-    await axios.post(host+'/answerCard', {
+    await axios.post(config.host+'/answerCard', {
       cardId:card.cardId,
       response,
     });
@@ -90,7 +89,7 @@ async function returnResult(card,response){
 async function getNextCard(){
   try {
     console.log('Getting next card...')
-    let response = await axios.get(host+'/getNextCard', {
+    let response = await axios.get(config.host+'/getNextCard', {
       params: {
         userId: 1234,
         deckId: 1234
