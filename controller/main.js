@@ -23,6 +23,11 @@ module.exports = {
       //get the next card from the server
       let card = await getNextCard();
 
+      console.log('Card before format: ' + JSON.stringify(card,null,4));
+      card = formatCard(card);
+      console.log('Card after format: ' + JSON.stringify(card,null,4));
+
+
       //console.log(JSON.stringify(card,null,4));
 
   
@@ -51,6 +56,21 @@ module.exports = {
   }
 };
 
+
+//Temp
+function formatCard(card){
+
+  console.log('card: ' + JSON.stringify(card,null,4));
+  const tempBack = JSON.parse(card.back);
+  const dictionaryDefintions = JSON.parse(tempBack.dictionarydefinition);
+  console.log('temp back: ' + JSON.stringify(tempBack,null,4));
+  return {
+    front:card.front,
+    back:dictionaryDefintions,
+    cardId:card.id
+  };  
+}
+
 async function returnResult(card,response){
   console.log('return result to server:');
   console.log(JSON.stringify(card,null,4));
@@ -58,12 +78,12 @@ async function returnResult(card,response){
 
   try {
     await axios.post(host+'/answerCard', {
-      cardId:card.id,
+      cardId:card.cardId,
       response,
     });
   }catch (err){
-    console.log('error returning to server: ');
-    //console.log('error returning to server: ', err);
+    // console.log('error returning to server: ');
+    console.log('error returning to server: ', err);
   }
 }
 
