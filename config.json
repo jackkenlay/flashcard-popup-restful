@@ -1,6 +1,6 @@
 {
-    "seconds":20,
+    "seconds":600,
     "host":"http://157.245.47.224:3002",
-    "userId":1,
-    "deckId":1
+    "userId":2,
+    "deckId":2
 }
