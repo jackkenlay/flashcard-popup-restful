@@ -54,3 +54,9 @@ Make this able to use it.
 * watch - swipe left or right.
 * House: Kindle picture frame
 * Tv - screen saver?
+
+## FOR LEI
+Open terminal: cmd + L   ->  type 'terminal' and hit enter
+
+In terminal, type:
+cd ~/flashcard-popup-restful && node app.js

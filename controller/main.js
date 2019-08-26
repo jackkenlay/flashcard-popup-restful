@@ -1,8 +1,8 @@
 const view = require('./../view/popup.js');
 const axios = require('axios');
 
-const config = require('./../config-local.json');
-// const config = require('./../config.json');
+// const config = require('./../config-local.json');
+const config = require('./../config.json');
 
 module.exports = {
   start: async () => {
