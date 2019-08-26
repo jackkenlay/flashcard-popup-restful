@@ -1,0 +1,6 @@
+{
+    "seconds":20,
+    "host":"http://localhost:3000",
+    "userId":1,
+    "deckId":1
+}
