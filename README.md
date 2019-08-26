@@ -60,3 +60,5 @@ Open terminal: cmd + L   ->  type 'terminal' and hit enter
 
 In terminal, type:
 cd ~/flashcard-popup-restful && node app.js
+
+Hey sexy schatzi
