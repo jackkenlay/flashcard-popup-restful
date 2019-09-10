@@ -14,7 +14,8 @@ module.exports = {
       //get the next card from the server
       let card = await getNextCard();
 
-      //console.log('Card before format: ' + JSON.stringify(card,null,4));
+      console.log('Card before format: ' + JSON.stringify(card,null,4));
+
       card = formatCard(card);
       //console.log('Card after format: ' + JSON.stringify(card,null,4));
       //console.log(JSON.stringify(card,null,4));
@@ -47,16 +48,20 @@ module.exports = {
 
 //Temp
 function formatCard(card){
+  console.log('Formatting card: ' + JSON.stringify(card,null,4));
+  try{
+    const tempBack = JSON.parse(card.back);
+    const dictionaryDefintions = JSON.parse(tempBack.dictionarydefinition);
+    console.log('temp back: ' + JSON.stringify(tempBack,null,4));
 
-  console.log('card: ' + JSON.stringify(card,null,4));
-  const tempBack = JSON.parse(card.back);
-  const dictionaryDefintions = JSON.parse(tempBack.dictionarydefinition);
-  console.log('temp back: ' + JSON.stringify(tempBack,null,4));
-  return {
-    front:card.front,
-    back:dictionaryDefintions,
-    cardId:card.id
-  };  
+    return {
+      front:card.front,
+      back:dictionaryDefintions,
+      cardId:card.id
+    };  
+  }catch(err){
+    console.log('Error formatting card: ');
+  }
 }
 
 async function returnResult(card,response){
