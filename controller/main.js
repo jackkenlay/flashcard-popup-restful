@@ -14,7 +14,7 @@ module.exports = {
       //get the next card from the server
       let card = await getNextCard();
 
-      console.log('Card before format: ' + JSON.stringify(card,null,4));
+      //console.log('Card before format: ' + JSON.stringify(card,null,4));
 
       card = formatCard(card);
       //console.log('Card after format: ' + JSON.stringify(card,null,4));
@@ -48,11 +48,11 @@ module.exports = {
 
 //Temp
 function formatCard(card){
-  console.log('Formatting card: ' + JSON.stringify(card,null,4));
+  //console.log('Formatting card: ' + JSON.stringify(card,null,4));
   try{
     const tempBack = JSON.parse(card.back);
     const dictionaryDefintions = JSON.parse(tempBack.dictionarydefinition);
-    console.log('temp back: ' + JSON.stringify(tempBack,null,4));
+    //console.log('temp back: ' + JSON.stringify(tempBack,null,4));
 
     return {
       front:card.front,
@@ -65,9 +65,9 @@ function formatCard(card){
 }
 
 async function returnResult(card,response){
-  console.log('return result to server:');
-  console.log(JSON.stringify(card,null,4));
-  console.log('returning to server: ' + JSON.stringify(response,null,4));
+  // console.log('return result to server:');
+  // console.log(JSON.stringify(card,null,4));
+  // console.log('returning to server: ' + JSON.stringify(response,null,4));
 
   try {
     await axios.post(config.host+'/answerCard', {
@@ -82,7 +82,7 @@ async function returnResult(card,response){
 
 async function getNextCard(){
   try {
-    console.log('Getting next card...')
+    //console.log('Getting next card...')
     
     let response = await axios.get(config.host+'/getNextCard', {
       params: {
