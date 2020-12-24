@@ -18,7 +18,7 @@
   "homepage": "https://github.com/jackkenlay/flashcard-popups#readme",
   "dependencies": {
     "axios": "^0.19.0",
-    "date-and-time": "^0.9.0",
+    "date-and-time": "^0.14.2",
     "node-cron": "^2.0.3",
     "node-notifier": "^5.4.0",
     "single-instance": "0.0.1"
